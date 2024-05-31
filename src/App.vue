@@ -58,6 +58,9 @@ function generateConfigs(initialConfig: VideoEncoderConfig) {
   // TODO: Doesn't consider vertical aspect ratios
   const configArray: VideoEncoderConfig[] = [];
 
+  // Add the initial config to the list to be tested
+  configArray.push(initialConfig);
+
   // Get aspect ratio of the initial config
   const aspectRatio = initialConfig.width / initialConfig.height;
 
