@@ -7,7 +7,7 @@ import { reactive, ref } from 'vue';
 const verticalPixelList = [2160, 1440, 1080, 720, 576];
 
 /**
- * Array of supported video encoder configurations
+ * Store all the configs that have been tested
  */
 const configsTested = reactive<VideoEncoderConfig[]>([]);
 
@@ -22,11 +22,17 @@ const initialConfig = ref<VideoEncoderConfig>({
   bitrateMode: 'quantizer',
 });
 
+/**
+ * Store the result of the test. Used to display the result of the test
+ */
 const result = reactive({
   status: '',
   config: initialConfig.value,
 });
 
+/**
+ * Run the test. Generates a list of alternative configurations and tests them
+ */
 async function run() {
   const configs = generateConfigs(initialConfig.value);
 
@@ -49,13 +55,18 @@ async function run() {
   }
 }
 
+/**
+ * Uses VideoEncoder to test if a config is supported
+ * @param config
+ * @returns boolean
+ */
 async function test(config: VideoEncoderConfig) {
   const { supported } = await VideoEncoder.isConfigSupported(config);
   return supported;
 }
 
 function generateConfigs(initialConfig: VideoEncoderConfig) {
-  // TODO: Doesn't consider vertical aspect ratios
+  // TODO: Doesn't consider vertical aspect ratios...
   const configArray: VideoEncoderConfig[] = [];
 
   // Add the initial config to the list to be tested
